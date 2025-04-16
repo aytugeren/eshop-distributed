@@ -1,4 +1,4 @@
-@Catalog_HostAddress = https://localhost:7234/products
+@Catalog_HostAddress = https://localhost:7108/products
 
 GET {{Catalog_HostAddress}}/
 Accept: application/json
@@ -49,17 +49,17 @@ Content-Type: application/json
 
 ### Support AI
 
-GET {{Catalog_HostAddress}}/support/give-me-1-outdoor-activity
-Accept: application/json
+# GET {{Catalog_HostAddress}}/support/give-me-1-outdoor-activity
+# Accept: application/json
 
 ### Traditional Search
 
-GET {{Catalog_HostAddress}}/search/Hiking
-Accept: application/json
+# GET {{Catalog_HostAddress}}/search/Hiking
+# Accept: application/json
 
 ### AI Search
 
-GET {{Catalog_HostAddress}}/aisearch/Something_for_rainy_days
-Accept: application/json
+# GET {{Catalog_HostAddress}}/aisearch/Something_for_rainy_days
+# Accept: application/json
 
 ###

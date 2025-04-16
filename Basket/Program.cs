@@ -1,19 +1,20 @@
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.AddServiceDefaults();
+builder.AddRedisDistributedCache(connectionName: "cache");
+builder.Services.AddScoped<BasketService>();
 
-builder.AddNpgsqlDbContext<ProductDbContext>(connectionName: "catalogdb");
-builder.Services.AddScoped<ProductService>();
+builder.Services.AddHttpClient<CatalogApiClient>(client =>
+{
+    client.BaseAddress = new("https+http://catalog");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.MapDefaultEndpoints();
-
-app.UseMigration();
-
-app.MapProductEndpoints();
+app.MapBasketEndpoints();
 
 app.UseHttpsRedirection();
 
