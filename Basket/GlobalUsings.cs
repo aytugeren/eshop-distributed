@@ -4,3 +4,5 @@ global using System.Text.Json;
 global using Basket.Services;
 global using Basket.Endpoints;
 global using Basket.ApiClient;
+global using ServiceDefaults.Messaging;
+global using System.Reflection;

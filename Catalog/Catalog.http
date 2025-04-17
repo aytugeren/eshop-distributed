@@ -38,7 +38,7 @@ Content-Type: application/json
 {    
     "name": "Solar Powered Flashlight",
     "description": "A fantastic product for outdoor enthusiasts",
-    "price": 5.99,
+    "price": 14.99,
     "imageUrl": "product1.png"
 }
 
