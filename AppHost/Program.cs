@@ -1,3 +1,5 @@
+using Projects;
+
 var builder = DistributedApplication.CreateBuilder(args);
 
 //// Backing Services
@@ -20,6 +22,11 @@ var rabbitmq = builder
     .WithDataVolume()
     .WithLifetime(ContainerLifetime.Persistent);
 
+var keycloak = builder
+    .AddKeycloak("keycloak", 8080)
+    .WithDataVolume()
+    .WithLifetime(ContainerLifetime.Persistent);
+
 //// Projects
 var catalog = builder
     .AddProject<Projects.Catalog>("catalog")
@@ -28,11 +35,23 @@ var catalog = builder
     .WaitFor(catalogDb)
     .WaitFor(rabbitmq);
 
-builder.AddProject<Projects.Basket>("basket")
+var basket = builder
+    .AddProject<Projects.Basket>("basket")
     .WithReference(cache)
     .WithReference(catalog)
     .WithReference(rabbitmq)
+    .WithReference(keycloak)
     .WaitFor(cache)
-    .WaitFor(rabbitmq);
+    .WaitFor(rabbitmq)
+    .WaitFor(keycloak);
+
+var webapp = builder
+    .AddProject<Projects.WebApp>("webapp")
+    .WithExternalHttpEndpoints()
+    .WithReference(cache)
+    .WithReference(catalog)
+    .WithReference(basket)
+    .WaitFor(catalog)
+    .WaitFor(basket);
 
 builder.Build().Run();
